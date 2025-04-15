@@ -1,0 +1,24 @@
+# password-manager-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: password-manager
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: password-manager
+  template:
+    metadata:
+      labels:
+        app: password-manager
+    spec:
+      containers:
+        - name: cli
+          image: madbakoyoyo/password_manager_cli:latest
+          envFrom:
+            - configMapRef:
+                name: pm-config
+            - secretRef:
+                name: pm-secrets
+          command: ["python", "password_manager.py", "generate-password", "--length", "20"]
