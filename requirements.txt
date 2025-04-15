@@ -1,3 +1,4 @@
 cryptography
 mysql-connector-python
 python-dotenv
+pyperclip
