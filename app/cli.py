@@ -1,5 +1,6 @@
 import argparse
-from app import db, encryption, password_generator, pyperclip
+import pyperclip
+from app import db, encryption, password_generator
 
 def main():
     parser = argparse.ArgumentParser(description="Simple Password Manager CLI")
