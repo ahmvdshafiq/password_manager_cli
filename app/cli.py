@@ -1,6 +1,5 @@
 import argparse
 from app import db, encryption, password_generator
-import pyperclip
 
 def main():
     parser = argparse.ArgumentParser(description="Simple Password Manager CLI")
@@ -28,4 +27,3 @@ def main():
     elif args.command == "generate-password":
         password = password_generator.generate_password(args.length)
         print(f"🔐 Generated Password: {password}")
-        pyperclip.copy(password)
