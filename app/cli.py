@@ -1,6 +1,6 @@
 import argparse
-import pyperclip
 from app import db, encryption, password_generator
+import pyperclip
 
 def main():
     parser = argparse.ArgumentParser(description="Simple Password Manager CLI")
@@ -21,14 +21,11 @@ def main():
     db.create_table()
 
     if args.command == "add-site":
-        print(f"Adding {args.site} with username {args.username}")
-        # (Coming soon: save to DB)
+        encrypted = encryption.encrypt_password(args.password)
+        db.save_password(args.site, args.username, encrypted)
+        print(f"🔐 Password for {args.site} saved.")
 
     elif args.command == "generate-password":
         password = password_generator.generate_password(args.length)
         print(f"🔐 Generated Password: {password}")
         pyperclip.copy(password)
-        pyperclip.paste()
-
-if __name__ == "__main__":
-    main()

@@ -1,2 +1,16 @@
+# .gitignore
 .env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.my_env/
+.idea/
+.vscode/
+*.db
+.DS_Store
+
 

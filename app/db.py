@@ -22,3 +22,13 @@ def create_table():
     """)
     conn.commit()
     conn.close()
+
+def save_password(site, username, password):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO passwords (site, username, password)
+        VALUES (%s, %s, %s);
+    """, (site, username, password))
+    conn.commit()
+    conn.close()
