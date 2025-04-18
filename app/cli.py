@@ -30,11 +30,4 @@ def main():
     elif args.command == "generate-password":
         password = password_generator.generate_password(args.length)
         print(f"🔐 Generated Password: {password}")
-
-    elif args.command == "view-passwords":
-        entries = db.get_all_passwords()
-        if not entries:
-            print("📭 No passwords saved.")
-        for site, username, enc_password in entries:
-            decrypted = encryption.decrypt_password(enc_password)
-            print(f"🔓 {site} | {username} | {decrypted}")
+        pyperclip.copy(password)
