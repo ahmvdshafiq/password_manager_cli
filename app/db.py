@@ -32,3 +32,11 @@ def save_password(site, username, password):
     """, (site, username, password))
     conn.commit()
     conn.close()
+
+def get_all_passwords():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT site, username, password FROM passwords")
+    rows = cursor.fetchall()
+    conn.close()
+    return rows

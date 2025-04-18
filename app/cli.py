@@ -1,6 +1,5 @@
 import argparse
 from app import db, encryption, password_generator
-import pyperclip
 
 def main():
     parser = argparse.ArgumentParser(description="Simple Password Manager CLI")
@@ -16,6 +15,9 @@ def main():
     gen_parser = subparsers.add_parser("generate-password", help="Generate a secure random password")
     gen_parser.add_argument("--length", type=int, default=16, help="Length of the password (default 16)")
 
+    # View-passwords
+    view_parser = subparsers.add_parser("view-passwords", help="View all stored passwords")
+
     args = parser.parse_args()
 
     db.create_table()
@@ -28,4 +30,11 @@ def main():
     elif args.command == "generate-password":
         password = password_generator.generate_password(args.length)
         print(f"🔐 Generated Password: {password}")
-        pyperclip.copy(password)
+
+    elif args.command == "view-passwords":
+        entries = db.get_all_passwords()
+        if not entries:
+            print("📭 No passwords saved.")
+        for site, username, enc_password in entries:
+            decrypted = encryption.decrypt_password(enc_password)
+            print(f"🔓 {site} | {username} | {decrypted}")
