@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: pm-config
 data:
-  DB_HOST: your-db-host
+  DB_HOST: mysql
   DB_NAME: password_manager
