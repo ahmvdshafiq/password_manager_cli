@@ -1,41 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Password Manager</title>
-    <meta charset="UTF-8">
-    <style>
-        body { font-family: Arial, sans-serif; margin: 2em; }
-        h1 { color: #444; }
-        table { width: 100%; border-collapse: collapse; margin-top: 1em; }
-        th, td { border: 1px solid #ccc; padding: 8px; }
-        form { margin-bottom: 2em; }
-        input[type="text"], input[type="password"] { padding: 8px; width: 200px; margin-right: 10px; }
-        button { padding: 8px 16px; }
-    </style>
-</head>
+<head><title>Password Manager</title></head>
 <body>
-    <h1>Password Manager</h1>
-
-    <form method="post" action="/add">
-        <input type="text" name="website" placeholder="Website" required>
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Save</button>
-    </form>
-
-    <table>
-        <tr>
-            <th>Website</th>
-            <th>Username</th>
-            <th>Password</th>
-        </tr>
-        {% for entry in passwords %}
-        <tr>
-            <td>{{ entry.website }}</td>
-            <td>{{ entry.username }}</td>
-            <td>{{ entry.password }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+  <h2>🔐 Stored Passwords</h2>
+  <a href="/add">Add New</a>
+  <table border="1">
+    <tr><th>Service</th><th>Username</th><th>Password</th><th>Action</th></tr>
+    {% for pw in passwords %}
+    <tr>
+      <td>{{ pw.service }}</td>
+      <td>{{ pw.username }}</td>
+      <td>{{ pw.password }}</td>
+      <td><a href="/delete/{{ pw.id }}">Delete</a></td>
+    </tr>
+    {% endfor %}
+  </table>
 </body>
 </html>
