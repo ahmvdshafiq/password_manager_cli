@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
 from .crud import save_password, get_passwords, init_db
 
 app = FastAPI()
