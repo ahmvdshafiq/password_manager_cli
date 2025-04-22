@@ -2,26 +2,39 @@
 <html>
 <head>
     <title>Password Manager</title>
+    <meta charset="UTF-8">
     <style>
-        body { font-family: sans-serif; padding: 2rem; }
-        form { margin-bottom: 2rem; }
-        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 0.5rem; }
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        h1 { color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+        th, td { border: 1px solid #ccc; padding: 8px; }
+        form { margin-bottom: 2em; }
+        input[type="text"], input[type="password"] { padding: 8px; width: 200px; margin-right: 10px; }
+        button { padding: 8px 16px; }
     </style>
 </head>
 <body>
     <h1>Password Manager</h1>
+
     <form method="post" action="/add">
-        <input type="text" name="site" placeholder="Site" required>
+        <input type="text" name="website" placeholder="Website" required>
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Save</button>
     </form>
 
-    <h2>Saved Passwords</h2>
     <table>
-        <tr><th>Site</th><th>Username</th><th>Password</th></tr>
-        {% for site, user, pw in passwords %}
-        <tr><td>{{ site }}</td><td>{{ user }}</td><td>{{ pw }}</td></tr>
+        <tr>
+            <th>Website</th>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+        {% for entry in passwords %}
+        <tr>
+            <td>{{ entry.website }}</td>
+            <td>{{ entry.username }}</td>
+            <td>{{ entry.password }}</td>
+        </tr>
         {% endfor %}
     </table>
 </body>

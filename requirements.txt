@@ -1,6 +1,5 @@
 fastapi
 uvicorn
-mysql-connector-python
-cryptography
 jinja2
-fernet
+aiomysql
+python-dotenv
