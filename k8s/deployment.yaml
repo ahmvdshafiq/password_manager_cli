@@ -1,10 +1,9 @@
-# password-manager-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: password-manager
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: password-manager
@@ -14,11 +13,46 @@ spec:
         app: password-manager
     spec:
       containers:
-        - name: cli
-          image: madbakoyoyo/password_manager_cli:latest
-          envFrom:
-            - configMapRef:
-                name: pm-config
-            - secretRef:
-                name: pm-secrets
-          command: ["python", "password_manager.py", "generate-password", "--length", "20"]
+      - name: password-manager
+        image: your-dockerhub-username/password-manager:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_HOST
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_USER
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_NAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_PASSWORD
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: SECRET_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: password-manager-service
+spec:
+  selector:
+    app: password-manager
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  type: ClusterIP

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Manager</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; }
+        form { margin-bottom: 2rem; }
+        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 0.5rem; }
+    </style>
+</head>
+<body>
+    <h1>Password Manager</h1>
+    <form method="post" action="/add">
+        <input type="text" name="site" placeholder="Site" required>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Save</button>
+    </form>
+
+    <h2>Saved Passwords</h2>
+    <table>
+        <tr><th>Site</th><th>Username</th><th>Password</th></tr>
+        {% for site, user, pw in passwords %}
+        <tr><td>{{ site }}</td><td>{{ user }}</td><td>{{ pw }}</td></tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

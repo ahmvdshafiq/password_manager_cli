@@ -1,4 +1,5 @@
-cryptography
+fastapi
+uvicorn
 mysql-connector-python
-python-dotenv
-pyperclip
+cryptography
+jinja2
