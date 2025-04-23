@@ -4,7 +4,6 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: password_db
@@ -12,28 +11,13 @@ services:
       MYSQL_PASSWORD: userpass
     ports:
       - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
 
-  app:
-    build: ./app
+  password-app:
+    build: .
     container_name: password-manager-app
-    restart: always
     depends_on:
       - mysql
     environment:
-      - DB_USER=user
-      - DB_PASSWORD=userpass
-      - DB_HOST=mysql
-      - DB_NAME=password_db
-    volumes:
-      - ./app:/app
-    command: python3 password_manager.py
-    # For GUI apps using X11 (Linux only):
-    environment:
-      - DISPLAY=${DISPLAY}
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-
-volumes:
-  mysql-data:
+      PYTHONUNBUFFERED: 1
+    stdin_open: true
+    tty: true
