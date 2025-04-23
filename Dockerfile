@@ -1,18 +1,17 @@
 FROM python:3.11
 
-# Install Tkinter and other required system packages
+# Install Tkinter only (no need for mysqlclient!)
 RUN apt-get update && apt-get install -y \
     python3-tk \
-    mysqlclient \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Copy app code
+# Copy application code
 COPY password_manager.py .
 
-# Install Python dependencies
+# Install Python packages
 RUN pip install mysql-connector-python
 
 # Run the app
