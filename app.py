@@ -1,16 +1,23 @@
 from flask import Flask, render_template, request, redirect
 import mysql.connector
+import time
 
 app = Flask(__name__)
 
-# MySQL connection config
-db = mysql.connector.connect(
-    host="mysql",
-    user="root",
-    password="rootpassword",
-    database="password_manager"
-)
-cursor = db.cursor()
+# Retry logic to wait for MySQL to be ready
+while True:
+    try:
+        db = mysql.connector.connect(
+            host="mysql",
+            user="root",
+            password="rootpassword",
+            database="password_manager"
+        )
+        cursor = db.cursor()
+        break
+    except mysql.connector.Error as err:
+        print("⏳ Waiting for MySQL... Error:", err)
+        time.sleep(2)
 
 # Create table if it doesn't exist
 cursor.execute("""
