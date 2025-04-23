@@ -3,7 +3,7 @@ FROM python:3.11
 # Install Tkinter and other required system packages
 RUN apt-get update && apt-get install -y \
     python3-tk \
-    libmysqlclient-dev \
+    mysqlclient \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
